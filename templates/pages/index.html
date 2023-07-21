@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+{% for post in jobs %}
+		<article class="media content-section">
+		  <div class="media-body">
+		    <div class="article-metadata">
+		      <a class="mr-2" href="{% url 'user-tasks' post.creator.username %}">{{ post.creator.username }}</a>
+		      <small class="text-muted">{{ post.date_created | timesince }} ago</small>
+		    </div>
+		    <h1><a class="article-title" href="{% url 'task-detail' post.id %}">{{ post.title }}</a></h1>
+		    <h5 class="article-content">{{ post.description }}</h5>
+		  </div>
+		</article>
+	{% endfor %}
+{% endblock %}
+{% block content_2 %}
+<div class="col-md-4">
+	<div class="content-section">
+	  <h3>Search</h3>
+	  <p class='text-muted'>Task Search Bar
+		<ul class="list-group">
+			<form action="{% url 'search' %}">
+			<label class="sr-only">Search by Assignee</label>
+			<select name="assignee" class="form-control">
+			<option selected="true" disabled="disabled">Search by Assignee</option>
+				{% for key, value in assignee_choices.items %}
+					<option value="{{ key }}">{{ value }}
+					</option>
+			{% endfor %}
+			</select>
+			<br>
+			<label class="sr-only">Search by Priority</label>
+			<select name="priority" class="form-control">
+			<option selected="true" disabled="disabled">Search by Priority</option>
+				{% for key, value in priority_choices.items %}
+					<option value="{{ key }}">{{ value }}
+					</option>
+			{% endfor %}
+			</select>
+			<br>
+			<label class="sr-only">Search by Progress</label>
+			<select name="progress" class="form-control">
+			<option selected="true" disabled="disabled">Search by Progress</option>
+				{% for key, value in progress_choices.items %}
+					<option value="{{ key }}">{{ value }}
+					</option>
+			{% endfor %}
+			</select>
+			<button class="btn btn-secondary btn-block mt-4" type="submit">Search</button>
+			</form>
+		</ul>
+	  </p>
+	</div>
+  </div>
+{% endblock %}

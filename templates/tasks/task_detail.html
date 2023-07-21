@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+		<article class="media content-section">
+		  <div class="media-body">
+		    <div class="article-metadata">
+		      <a class="mr-2" href="{% url 'user-tasks' post.creator.username %}">{{ post.creator.username }}</a>
+		      <small class="text-muted">{{ post.date_created | timesince }} ago</small>
+		    </div>
+		    <h1><a class="article-title" href="{% url 'task-detail' post.id %}">{{ post.title }}</a></h1>
+		    <h5 class="article-content">{{ post.description }}</h5>
+            <hr>
+            <h6>Assignees:-</h6>
+            <p>
+            {% for assignee in post.assignees.all %}
+            <a class="mr-2" href="{% url 'user-tasks' assignee.username %}"> {{ assignee.username }} </a>
+            {% endfor %}
+            </p>
+			<hr>
+            <h6>Due by:- {{ post.due_date }}</h6>
+			<hr>
+			<h6> Progress:- {{ post.progress }}</h6>
+			{% if user in post.assignees.all %}
+			<h6>Update Progress</h6>
+			<br>
+				<div class="col-md-4 mb-3">
+					<form action="{% url 'task-detail' post.id %}" method="POST">
+						{% csrf_token %}
+                    <label class="sr-only">Progress</label>
+                    <select name="progress" class="form-control">
+                    <option selected="true" disabled="disabled">{{ post.progress }}</option>
+                        {% for key, value in progress_choices.items %}
+                            <option value="{{ key }}">{{ value }}
+                            </option>
+                    {% endfor %}
+                    </select>
+					<button class="btn btn-secondary btn-block mt-4" type="submit">Update</button>
+					</form>
+                </div>
+				{% endif %}
+			</h6>
+			<hr>
+			<h6>Priority:- {{ post.priority }}</h6>
+			<hr>
+		  	<h6>Labels:- {{ post.labels }}</h6>
+		  </div>
+		</article>
+{% endblock %}

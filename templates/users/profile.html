@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}
+| User Profile
+{% endblock %}
+{% block content %}
+<h1>User Details</h1>
+    <div class="content-section">
+      <div class="media">
+        <div class="media-body">
+          <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
+          <p class="text-secondary">Username: {{ user.username }}</p>
+          <p class="text-secondary">Email: {{ user.email }}</p>
+        </div>
+      </div>
+    </div>
+      <br>
+      <h1>User Tasks</h1>
+  {% for post in tasks %}
+		<article class="media content-section">
+		  <div class="media-body">
+		    <div class="article-metadata">
+		      <a class="mr-2" href="{% url 'user-tasks' post.creator.username %}">{{ post.creator.username }}</a>
+		      <small class="text-muted">{{ post.date_created | timesince }} ago</small>
+		    </div>
+		    <h1><a class="article-title" href="{% url 'task-detail' post.id %}">{{ post.title }}</a></h1>
+		    <h5 class="article-content">{{ post.description }}</h5>
+		  </div>
+		</article>
+	{% endfor %}
+{% endblock %}

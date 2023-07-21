@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}
+| Search Results
+{% endblock %}
+{% block content %}
+{% if results %}
+{% for post in results %}
+		<article class="media content-section">
+		  <div class="media-body">
+		    <div class="article-metadata">
+		      <a class="mr-2" href="{% url 'user-tasks' post.creator.username %}">{{ post.creator.username }}</a>
+		      <small class="text-muted">{{ post.date_created | timesince }} ago</small>
+		    </div>
+		    <h1><a class="article-title" href="{% url 'task-detail' post.id %}">{{ post.title }}</a></h1>
+		    <h5 class="article-content">{{ post.description }}</h5>
+		  </div>
+		</article>
+	{% endfor %}
+    {% else %}
+    <h1>No Results</h1>
+    {% endif %}
+{% endblock %}
