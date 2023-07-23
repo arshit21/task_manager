@@ -45,4 +45,36 @@
 		  	<h6>Labels:- {{ post.labels }}</h6>
 		  </div>
 		</article>
+		<article class="media content-section">
+			<div class="media-body">
+			  <div class="article-metadata">
+				<form action="">
+					<div class="form-group">
+						<label for="comment"><h4>Add Comment</h4></label>
+						<textarea name="comment" class="form-control" rows="3"required ></textarea>
+					</div>
+					<button class="btn btn-secondary btn-block mt-4" type="submit">Add</button>
+				</form>
+				<br>
+				<h4>Comments</h4>
+				<hr>
+				{% if comments %}
+				{% for comment in comments %}
+				<h6 class="my-0">{{ comment.user.username }}</h6>
+				<small class="text-muted">{{ comment.date_posted | timesince }} ago</small>
+				<div class="media content-section">
+					<div class="media-body">
+						<div class="article-metadata">
+							<h6>{{comment.comment}}</h6>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+				{% else %}
+				<h6>No Comments</h6>
+				{% endif %}
+			  </div>
+			</div>
+		</article>
+		
 {% endblock %}

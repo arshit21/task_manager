@@ -13,8 +13,10 @@ class task(models.Model):
     labels = models.CharField(max_length=100, blank=True)
     date_created = models.DateTimeField(default=timezone.now)
     def __str__(self):
-        return self.creator.username
+        return self.title
 
 class comment(models.Model):
     task = models.ForeignKey(task, on_delete=models.CASCADE)
-    comment = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField(blank=True)
+    date_posted = models.DateTimeField(default=timezone.now)

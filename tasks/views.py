@@ -1,8 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import task
+from .models import task, comment
 from users.models import User
-from django.core.mail import send_mail
 from .choices import assignee_choices, priority_choices, progress_choices
 
 @login_required
@@ -14,10 +13,17 @@ def TaskDetailView(request, pk):
             post.progress = progress
             post.save()
 
+      if 'comment' in request.GET:
+            Comment = request.GET['comment']
+            Comment = comment.objects.create(task_id=post.id, comment=Comment, user_id=user.id)
+            Comment.save()
+      Comments = comment.objects.filter(task_id=post.id)
+
       context = {
             'post': post,
             'priority_choices': priority_choices,
-            'progress_choices': progress_choices
+            'progress_choices': progress_choices,
+            'comments': Comments
       }
       return render(request, 'tasks/task_detail.html', context)
 
