@@ -160,9 +160,6 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
-EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'
-MAILJET_API_KEY = "eff96334c0dd8ca8a3c1c925fae14b38"
-MAILJET_API_SECRET = "a1585320e13f7978ec0ec0f70494bd1f"
 
 
 SITE_ID = 2

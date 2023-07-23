@@ -5,6 +5,7 @@ from users.models import User
 from django.core.mail import send_mail
 from .choices import assignee_choices, priority_choices, progress_choices
 
+@login_required
 def TaskDetailView(request, pk):
       post = get_object_or_404(task, id=pk)
       user=request.user
@@ -12,12 +13,6 @@ def TaskDetailView(request, pk):
             progress = request.POST['progress']
             post.progress = progress
             post.save()
-            # subject = 'Due Date'
-            # message = f'Due Date Approaching'
-            # email_from = 'f20220331@pilani.bits-pilani.ac.in'
-            # recipent_email = [f'{user.email}',]   
-            # send_mail(subject, message, email_from, recipent_email)
-            # return redirect('task-detail', pk)
 
       context = {
             'post': post,

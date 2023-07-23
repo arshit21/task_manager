@@ -16,4 +16,5 @@ class task(models.Model):
         return self.creator.username
 
 class comment(models.Model):
-    task = models.ForeignKey(User, on_delete=models.CASCADE)
+    task = models.ForeignKey(task, on_delete=models.CASCADE)
+    comment = models.TextField()
