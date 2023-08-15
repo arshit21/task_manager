@@ -36,6 +36,15 @@
 				{% for key, value in priority_choices.items %}
 					<option value="{{ key }}">{{ value }}
 					</option>
+				{% endfor %}	
+				</select>
+			<br>
+			<label class="sr-only">filter by due date</label>
+			<select name="due_date_duration" class="form-control">
+			<option selected="true" disabled="disabled">Filter by due date</option>
+				{% for key, value in due_date_choices.items %}
+					<option value="{{ key }}">{{ value }}
+					</option>
 			{% endfor %}
 			</select>
 			<br>

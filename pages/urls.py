@@ -1,12 +1,8 @@
 from django.urls import path
-from .views import (
-    about,
-    TaskListView,
-    search
-)
+from .views import *
 
 urlpatterns = [
     path('', TaskListView.as_view(), name='index'),
     path('about/', about, name='about'),
-    path('search/',search, name='search' )
+    path('search/',search, name='search' ),
 ]

@@ -32,27 +32,21 @@ def create_task(request):
       if request.method == 'POST':
             title = request.POST['title']
             description = request.POST['description']
-            assignee_1_username = request.POST['assignee_1']
-            assignee_2_username = request.POST['assignee_2']
-            assignee_3_username = request.POST['assignee_3']
             priority = request.POST['priority']
             due_date = request.POST['due_date']
             labels = request.POST['labels']
             creator = request.user
             progress = 'Not Started'
+            assignee_ids = request.POST.getlist('assignees')
+            assignees = User.objects.filter(pk__in=assignee_ids)
 
-            assignee_1 = get_object_or_404(User, username=assignee_1_username)
-            assignee_2 = get_object_or_404(User, username=assignee_2_username)
-            assignee_3 = get_object_or_404(User, username=assignee_3_username)
-            
             Task = task.objects.create(creator_id=creator.id ,title=title, description=description, priority=priority, due_date=due_date, labels=labels, progress=progress)
-            Task.assignees.add(assignee_1)
-            Task.assignees.add(assignee_2)
-            Task.assignees.add(assignee_3)
+            Task.assignees.set(assignees)
             Task.save()
             return redirect('index')
+      users = User.objects.all()
       context = {
-            'assignee_choices': assignee_choices,
-            'priority_choices': priority_choices
+            'priority_choices': priority_choices,
+            'users': users
       }
       return render(request, 'tasks/create_task.html', context)
